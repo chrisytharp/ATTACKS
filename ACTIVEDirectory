@@ -1,0 +1,33 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+TOOLS: IMPACKET  && BLOODHOUND && neo4j && Enumm4Linux && Kerbrute
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+INSTAL IMPACKET
+                1- clone Impacket into /opt/impacket:
+                                         "git clone https://github.com/SecureAuthCorp/impacket.git /opt/impacket"
+                2- Install the Python requirements for Impacket:
+                                          "pip3 install -r /opt/impacket/requirements.txt"
+                3- Run the python setup install script:
+                                           "cd /opt/impacket/ && python3 ./setup.py install"
+      // IF ERRs try //
+                Try the following script and see if this works:
+                  1- sudo git clone https://github.com/SecureAuthCorp/impacket.git /opt/impacket
+                  2- sudo pip3 install -r /opt/impacket/requirements.txt
+                  3- cd /opt/impacket/ 
+                  4- sudo pip3 install .
+                  5- sudo python3 setup.py instal
+INSTALL BLOODOUND && neo4j
+                  1- apt install bloodhound neo4j
+                  2- sudo apt update && sudo apt upgrade -y
+                
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ENUMERATION
+                  1- enum4linux [OPTIONS] IP
+                  2- Kerbrute: brute force discovery of users, passwords and even password spray!
+                  !! NOT recommended to brute force credentials due to account lockout policies that we cannot enumerate on the domain controller.
+                  
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
