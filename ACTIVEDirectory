@@ -71,7 +71,7 @@ smbclient:
           1- smbclient -L <DC's_IP> -U ‘svc-admin’                       'svc-admin = is the cracked account'
               # you will be prompted for passwd & then shares will be listed on spookysec.local
           2- If you find an Ineteresting share connect to it (ie backup dir)
-              "smbclient '\\\\spookysec.local\\backup' -U svc-admin"
+              smbclient //<DC's_IP>/<dir_wanting_to_see> -U 'svc-admin'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
