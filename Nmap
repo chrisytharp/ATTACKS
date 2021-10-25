@@ -1,0 +1,63 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NMAP   {lua program language NSE}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  -sn         tells nmap to not scan ports
+  -p-         {scan all ports 0-65535} 
+  -p 80       {scan one port} 
+  -p 10-100   {scan port range}
+  -Pn         Tells Nmap to not bother pinging the host before scanning it
+  
+Multiple scripts can be run simultaneously example:                       --script=smb-enum-users,smb-enum-shares.
+Scripts requiring args:                                                   --script-args Nmap switch.
+Example of http-put script (used to upload files using the PUT method). 
+This takes two arguments: the URL to upload the file to, and the file's location on disk.  For example:
+
+            nmap -p 80 --script http-put --script-args http-put.url='/dav/shell.php',http-put.file='./shell.php'
+
+            Note: Args are separated by commas, and connected to the corresponding script with periods (i.e.  <script-name>.<argument>).
+
+Full list of scripts & arguments (along with example use cases) can be found:   https://nmap.org/nsedoc/
+
+Searching for scripts grep "ftp" /usr/share/nmap/scripts/script.db     Note: the use of asterisks (*) on either side of the search term
+             
+             ls -l /usr/share/nmap/scripts/*ftp*:
+
+Some useful categories include:
+      safe:           Won't affect the target
+      intrusive:      Not safe: likely to affect the target
+      vuln:           Scan for vulnerabilities
+      exploit:        Attempt to exploit a vulnerability
+      auth:           Attempt to bypass authentication for running services (e.g. Log into an FTP server anonymously)
+      brute:          Attempt to bruteforce credentials for running services
+      discovery:      Attempt to query running services for further information about the network (e.g. query an SNMP server).
+      more here:  https://nmap.org/book/nse-usage.html
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FIREWALL  BYPASSING
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+There are a variety of other switches which Nmap considers useful for firewall evasion found here  https://nmap.org/book/man-bypass-firewalls-ids.html
+
+The following switches are of particular note:
+  
+  -f                        Fragment the packets (i.e. split them into smaller pieces) making it less likely that the packets will be detected by a firewall or IDS.
+  --mtu <number>            Alternative to -f, but providing more control over the size of the packets accepts a maximum transmission unit size to use for the packets sent.
+                            This must be a multiple of 8.
+  --scan-delay <time>ms     Used to add a delay between packets sent. This is very useful if the network is unstable, but also for evading any time-based firewall/IDS triggers
+                            which may be in place.
+  --badsum                  Generate in invalid checksum for packets. Any real TCP/IP stack would drop this packet, however, firewalls may potentially respond automatically, 
+                            without bothering to check the checksum of the packet. As such, this switch can be used to determine the presence of a firewall/IDS.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Installing New Scripts:
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+A standard sudo apt update && sudo apt install nmap 
+
+Manually downloading the script from Nmap :
+
+sudo wget -O /usr/share/nmap/scripts/<script-name>.nse https://svn.nmap.org/nmap/scripts/<script-name>.nse
+This must then be followed up with nmap --script-updatedb, which updates the script.db file to contain the newly downloaded script.
+
+It's worth noting that you would require the same "updatedb" command if you were to make your own NSE script and add it into Nmap -- a more than manageable task with some
+basic knowledge of Lua!
+https://nmap.org/nsedoc/
+
+https://nmap.org/book/man-bypass-firewalls-ids.html
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
