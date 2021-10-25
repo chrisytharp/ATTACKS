@@ -94,7 +94,8 @@ We can use another tool within Impacket called "secretsdump.py". This will allow
                                                            The Hash
 2- evil-winrm -i <DC's_IP> -u <USER_ACCOUNT> -H <HASH>
 
-
+NOTE: Use "more" to read files in PowerShell
+more <filename.txt>
 
 
 
