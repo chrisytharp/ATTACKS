@@ -33,8 +33,11 @@ FILE 1 - local_passwd
 FILE 2 - local_shadow
         Contains the /etc/shadow line for the root user:
         "root:$6$2nwjN454g.dv4HN/$m9Z/r2xVfweYVkrr.v5Ft8Ws3/YYksfNwq96UL1FX0OJjY1L6l.DS3KEVsZ9rOVLB/ldTeEL/OIhJZ4GMFMGA0:18576::::::"
-example:
-"unshadow root:x:0:0::/root:/bin/bash root:$6$2nwjN454g.dv4HN/$m9Z/r2xVfweYVkrr.v5Ft8Ws3/YYksfNwq96UL1FX0OJjY1L6l.DS3KEVsZ9rOVLB/ldTeEL/OIhJZ4GMFMGA0:18576:::::: > unshadowed.txt"
+  example:
+      1- Creat a new file "crackme.txt:
+      2- Save "root:x:0:0::/root:/bin/bash" in Line 1
+      3- Save ""root:$6$2nwjN454g.dv4HN/$m9Z/r2xVfweYVkrr.v5Ft8Ws3/YYksfNwq96UL1FX0OJjY1L6l.DS3KEVsZ9rOVLB/ldTeEL/OIhJZ4GMFMGA0:18576::::::" on Line 2
+      4- john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt crackme.txt
 
 Cracking
 After feeding the output from unshadow to "unshadowed.txt" directly into John. We should not need to specify a mode here as we have made the input 
