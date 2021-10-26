@@ -18,3 +18,5 @@ USAGE
 --format=NT
 
     john --format=NT --wordlist=/usr/share/wordlists/rockyou.txt hashfile.txt
+
+
