@@ -1,0 +1,17 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+NTHash / NTLM
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  NThash is the hash format that modern Windows OS machines will store user and service passwords in
+  Commonly referred to as "NTLM" which references the previous version of Windows format for hashing passwords known as "LM", thus "NT/LM".
+
+  History, NT designation for Windows products meant "New Technology" & was used starting with Windows NT, to denote products that were not built up from the 
+  MS-DOS Operating System. 
+  Eventually, the "NT" line became the standard OS type to be released by Microsoft and the name was dropped, but it still lives on in the names of some 
+  Microsoft technologies. 
+
+Aquire NTHash/NTLM hashes by dumping the "SAM database" using a tool like Mimikatz OR from Active Directory database "NTDS.dit"
+You may not have to crack the hash to continue privilege escalation as you can often conduct a "PASS-th-HASH" attack instead,
+but sometimes hash cracking is a viable option if there is a weak password policy!
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+USAGE
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
