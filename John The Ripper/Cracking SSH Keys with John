@@ -17,7 +17,7 @@ If you're doing this, replace the ssh2john command with:
 
                   python3 /opt/ssh2john.py 
     On Kali: 
-                  python /usr/share/john/ssh2john.py.
+                  python /usr/share/john/ssh2john.py
 
 
                   ssh2john [id_rsa private key file] > [output file]
