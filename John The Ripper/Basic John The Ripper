@@ -1,0 +1,64 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Installing JtR
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Kali        (Test if it's already installed by typing "john" in the Terminal)
+      sudo apt install john 
+      
+BlackArch   (Test if it's already installed by typing "pacman -Qe | grep "john"" in the Terminal)
+      pacman -S john
+      
+Linux       (Building from Source)
+      git clone https://github.com/openwall/john -b bleeding-jumbo john
+      cd john/src/
+      ./configure                       <- Check for Dependancies && Install any required w/ pip
+      make -s clean && make -sj4
+      cd ../run                         <- Binary will be in the run Dir
+      ./john --test                     <- Test Binary
+      
+Windows
+      Install 64 bit 
+                      https://www.openwall.com/john/k/john-1.9.0-jumbo-1-win64.zip
+      Install 32 bit 
+                      https://www.openwall.com/john/k/john-1.9.0-jumbo-1-win32.zip
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Wordlists
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+SecLists                                              {rockyou is in /Passwords/Leaked-Databases   && Extract w/ {tar xvzf rockyou.txt.tar.gz}
+          https://github.com/danielmiessler/SecLists
+Kali 
+          /usr/share/wordlists
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+USAGE
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Basic Syntax
+                        john [options] [path to file]
+                        
+Automatic Cracking (NOT IDEA)!!
+      Auto detect what type of hash it's being given & select appropriate rules and formats to crack it for you
+
+                        john --wordlist=[path to wordlist] [path to file]
+            example:    john --wordlist=/usr/share/wordlists/rockyou.txt hash_to_crack.txt
+            
+Identifying Hashes
+      Multiple TOOLS to do this: 
+      online hash identifier:  https://hashes.com/en/tools/hash_identifier
+      Hash-identifier:   Python tool easy to use, will tell you what different types of hashes the one you enter is likely to be, giving you more options if 
+                         the first one fails
+                         Launch it with python3 hash-id.py and then enter the hash you're trying to identify- and it will give you possible formats!
+                         
+                         "wget https://gitlab.com/kalilinux/packages/hash-identifier/-/raw/kali/master/hash-id.py"
+                         python3 hash-id.py <hash>
+FORMAT SPECIFIC CRACKING
+                        john --format=[format] --wordlist=[path to wordlist] [path to file]
+            example:    john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hash_to_crack.txt
+
+Note on Formats:
+When you are telling john to use formats, if you're dealing with a standard hash type {MD5} 
+You have to prefix it with raw- to tell john you're just dealing with a standard hash type, though this doesn't always apply. 
+To check if you need to add the prefix or not, you can list all of John's formats using:
+      
+                              john --list=formats                        <- Manually Check
+or grep for your hash type:
+                              john --list=formats | grep -iF "md5"
+                              
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
