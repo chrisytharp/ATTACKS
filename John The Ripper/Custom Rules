@@ -1,2 +1,63 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Custom Rules
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Defining your own set of rules, which John will use to dynamically create passwords. Especially useful when you know more information about the password 
+          structure of whatever your target is.
+          
+Common Custom Rules
+-----------------------
+Password complexity in Companies req:
+      Capital letter
+      Number
+      Symbol
+
+Ex..   Password1!
+
+Creating Custom Rules
+-----------------------
+Custom rules are defined in the "john.conf" file located in /etc/john/john.conf
+Syntax of these custom rules   More Info Here -> https://www.openwall.com/john/doc/RULES.shtml
+
+  1st Line: [List.Rules:MyRule] - Is used to define the name of your rule, this is what you will use to call your custom rule as an argument.
+
+  We then use a regex style pattern match to define where in the word will be modified NOTE: only covering the basics and most common modifiers:
+        Az - Takes the word and appends it with the characters you define
+        A0 - Takes the word and prepends it with the characters you define
+        c - Capitalises the character positionally
+These can be used in combination to define where and what in the word you want to modify.
+
+Then define what characters should be appended, prepended or otherwise included, we do this by adding character sets in square brackets [ ]
+in the order they should be used. These directly follow the modifier patterns inside of double quotes " ". Here are some common examples:
+        [0-9] - Will include numbers 0-9
+        [0] - Will include only the number 0
+        [A-z] - Will include both upper and lowercase
+        [A-Z] - Will include only uppercase letters
+        [a-z] - Will include only lowercase letters
+        [a] - Will include only a
+        [!£$%@] - Will include the symbols !£$%@
+
+Putting this all together, in order to generate a wordlist from the rules that would match the example password "Password1!" we would create 
+a rule entry that looks like this:
+        
+        [List.Rules:MyRule]
+        cAz"[0-9] [!£$%@]"
+
+In order to:
+        Capitalise the first  letter - c                     rule looks for passwords - 1st is CAPITALIZED, the length is 0-9 digits long (using all letters from A-Z & a-z)
+        Append to the end of the word - Az                                              and ends with one of the following special chars "!£$%@"
+        A number in the range 0-9 - [0-9]
+        Followed by a symbol that is one of [!£$%@]
+
+
+
+Using Custom Rules
+We could then call this custom rule as a John argument using the  --rule=MyRule
+
+        john --wordlist=[path to wordlist] --rule=PoloPassword [path to file]
+
+Jumbo John comes with a large list of custom rules, which contain modifiers for use almost all cases. If you get stuck, try looking at those rules [around line 678] if your
+syntax isn't working properly.
+
+
+
+        
