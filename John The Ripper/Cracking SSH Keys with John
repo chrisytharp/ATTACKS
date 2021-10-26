@@ -1,2 +1,41 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Cracking SSH Key Passwords
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Using John to crack the SSH "PRIVATE KEY" password of "id_rsa" files.
+
+            Unless configured otherwise, you authenticate your SSH login using a password. You can configure key-based authentication, which lets you use your 
+            private key,id_rsa, as an authentication key to login to a remote machine over SSH.
+            However, doing so will often require a password- here we will be using John to crack this password to allow authentication over SSH using the key.
+            
+-----------------------
+SSH2John
+-----------------------
+ssh2john converts the id_rsa private key into hash format that john can work with. 
+Note that if you don't have ssh2john installed, you can use ssh2john.py, which is located in the /opt/john/ssh2john.py.
+
+If you're doing this, replace the ssh2john command with:
+
+                  python3 /opt/ssh2john.py 
+    On Kali: 
+                  python /usr/share/john/ssh2john.py.
+
+
+                  ssh2john [id_rsa private key file] > [output file]
+
+                            ssh2john - Invokes the ssh2john tool
+
+                            [id_rsa private key file] - The path to the id_rsa file you wish to get the hash of
+
+                            > - This is the output director, we're using this to send the output from this file to the...
+
+                            [output file] - This is the file that will store the output from
+Example...
+
+              ssh2john id_rsa > id_rsa_hash.txt
+
+Cracking
+Feed the file we output from ssh2john with John:
+
+              john --wordlist=/usr/share/wordlists/rockyou.txt id_rsa_hash.txt
+              
+              
