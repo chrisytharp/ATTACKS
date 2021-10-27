@@ -10,7 +10,7 @@ Attack Privilege Requirements -
                                 Silver Ticket - Service hash required 
                                 Skeleton Key - Full domain compromise (domain admin) required
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Enumeration w/ Kerbrute                       TOOL:   Kerbrute
+Enumeration w/ Kerbrute               TOOL:   Kerbrute                               <-- SEE "ATTACKS / AD enum exploit"
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 NOTE: You need to add 'DNS domain name' along w/ the 'machine IP' to '/etc/hosts' insideyour attacker machine or these attacks will not work for you 
        MACHINE_IP  CONTROLLER.local   
@@ -29,7 +29,7 @@ Enumerating Users w/ Kerbrute -
                               <- will return machinename.Domain Name  i.e.  Comp1.controller.local
                               1.) cd into the directory that you put Kerbrute 
                               Brute force user accounts from a domain controller using wordlist
-                              2.) "./kerbrute userenum --dc CONTROLLER.local -d CONTROLLER.local [wordlist]"
+                              2.) "./kerbrute userenum --dc <DC's_IP> -d controller.local userlist.txt -t 100"           
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                              
  Harvesting & Brute-Forcing Tickets                             TOOLS:  Rubeus                              
  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
