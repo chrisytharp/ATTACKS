@@ -3,7 +3,7 @@ If you have ssh acces you may need to upload binaries to non-root users
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 1.) From Client to Remote-Server
            ex.Local Machine) 
-                              scp uploadFile.txt remoteUser@[Server-IP:\Dir\to\place\file]
+                              scp uploadFile.txt remoteUser@[Server-IP:/tmp]
                               
 2.) From Remote-Server to Client
            ex.Remote Machine)  
