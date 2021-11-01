@@ -1,21 +1,22 @@
-Weak File Permissions - Readable /etc/shadow
-Weak File Permissions - Writable /etc/shadow
-Weak File Permissions - Writable /etc/passwd
-Sudo - Shell Escape Sequences
-Sudo - Environment Variables
-Cron Jobs - File Permissions
-Cron Jobs - PATH Environment Variable
-Cron Jobs - Wildcards    USING MSFVENOM
-SUID / SGID Executables - Known Exploits !!!
-SUID / SGID Executables - Shared Object Injection
-SUID / SGID Executables - Environment Variables
-SUID / SGID Executables - Abusing Shell Feature on Bash versions < 4.2-048
-SUID / SGID Executables - Abusing Shell Features on Bash versions 4.4 and above
-Passwords & Keys - History Files
-Passwords & Keys - Config Files  (Example..openvpn)
-Passwords & Keys - SSH Keys
-NFS
-Kernel Exploits      "Linux Exploit Suggester 2" https://github.com/jondonas/linux-exploit-suggester-2
+LINE #
+21      Weak File Permissions - Readable /etc/shadow
+41      Weak File Permissions - Writable /etc/shadow
+55      Weak File Permissions - Writable /etc/passwd
+82      Sudo - Shell Escape Sequences
+92      Sudo - Environment Variables
+131     Cron Jobs - File Permissions
+160     Cron Jobs - PATH Environment Variable
+183     Cron Jobs - Wildcards    USING MSFVENOM
+216     SUID / SGID Executables - Known Exploits !!!
+231     SUID / SGID Executables - Shared Object Injection
+258     SUID / SGID Executables - Environment Variables
+283     SUID / SGID Executables - Abusing Shell Feature on Bash versions < 4.2-048
+307     SUID / SGID Executables - Abusing Shell Features on Bash versions 4.4 and above
+320     Passwords & Keys - History Files
+328     Passwords & Keys - Config Files  (Example..openvpn)
+341     Passwords & Keys - SSH Keys
+364     NFS
+394     Kernel Exploits-"Linux Exploit Suggester 2" https://github.com/jondonas/linux-exploit-suggester-2
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Weak File Permissions - Readable /etc/shadow                        /home/user/tools/ <-- Found on ExploitDB github
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
