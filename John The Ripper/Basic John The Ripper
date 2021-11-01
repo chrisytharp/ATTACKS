@@ -51,6 +51,7 @@ Identifying Hashes
 FORMAT SPECIFIC CRACKING
                         john --format=[format] --wordlist=[path to wordlist] [path to file]
             example:    john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hash_to_crack.txt
+                        john --format=raw-sha256
 
 Note on Formats:
 When you are telling john to use formats, if you're dealing with a standard hash type {MD5} 
