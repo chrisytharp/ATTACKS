@@ -2,3 +2,39 @@ BCRYPT-BLOWFISH HASH
 Hash: $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom
 
 Solution: This one is little bit tricky which is this hash cannot be cracked using online tool. That is why hashcat came in, set the mode to -m 3200
+
+
+SHA-256
+./hashcat64.bin -m 100 hash.txt rockyou.txt
+
+BCRYPT
+./hashcat64.bin -m 3200 hash.txt ../rockyou.txt
+
+MD4
+./hashcat64.bin -m 900 hash.txt rockyou.txt
+
+SHA256
+./hashcat64.bin -m 1400 hash.txt ../rockyou.txt
+
+NTLM 
+./hashcat/hashcat64.bin -m 1000 md5.hash rockyou.txt
+
+SHA-512 w/ SALT
+txt 
+    Hash: $6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02.
+    Salt: aReallyHardSalt
+    Rounds: 5
+
+./hashcat/hashcat64.bin -m 1800 sha512.hash rockyou.txt --session sha512
+
+SHA-1 w/ SALT
+txt 
+    Hash: e5d8870e5bdd26602cab8dbe07a942c8669e56d6
+    Salt: tryhackme
+
+./hashcat64.bin -m 110 ../hash.sha1 ../rockyou.txt
+
+
+
+
+
