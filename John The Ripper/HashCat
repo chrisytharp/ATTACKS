@@ -1,0 +1,4 @@
+BCRYPT-BLOWFISH HASH
+Hash: $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom
+
+Solution: This one is little bit tricky which is this hash cannot be cracked using online tool. That is why hashcat came in, set the mode to -m 3200
