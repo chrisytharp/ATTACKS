@@ -6,7 +6,9 @@ Start Hashcat in Kali
 Important options are:
                            -m(or --hash-type) 
                            -a(or –attack-mode) 
-                           
+Searching for mode types
+                           hashcat -h | grep "bcrypt"
+
 hashcat -m 0 -a 0 -o cracked.txt target_hashes.txt /usr/share/wordlists/rockyou.txt
 
       -m 0                 designates the type of hash we are cracking (MD5)
