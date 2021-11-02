@@ -21,7 +21,27 @@ Win
 
 Perform Bench Mark      
                     "hashcat -m 0 -b"
-                    
+Attack Modes:
+        0 = Straight
+        1 = Combination
+        2 = Toggle-Case
+        3 = Brute-force
+        4 = Permutation
+        5 = Table-Lookup
+        8 = Prince
+Built-in charsets:
+   ?l = abcdefghijklmnopqrstuvwxyz
+   ?u = ABCDEFGHIJKLMNOPQRSTUVWXYZ
+   ?d = 0123456789
+   ?s =  !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+   ?a = ?l?u?d?s
+   ?b = 0x00 - 0xff
+Custom charsets:
+  -1,  --custom-charset1=CS          User-defined charsets
+  -2,  --custom-charset2=CS          Example:
+  -3,  --custom-charset3=CS          --custom-charset1=?dabcdef : sets charset ?1 to 0123456789abcdef
+  -4,  --custom-charset4=CS          -2 mycharset.hcchr : sets charset ?2 to chars contained in file
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Generic hash types
 
