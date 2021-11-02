@@ -8,15 +8,20 @@ Important options are:
                            -a(or –attack-mode) 
 Searching for mode types
                            hashcat -h | grep "bcrypt"
-
-hashcat -m 0 -a 0 -o cracked.txt target_hashes.txt /usr/share/wordlists/rockyou.txt
+Nix
+    hashcat -m 0 -a 0 -o cracked.txt target_hashes.txt /usr/share/wordlists/rockyou.txt
+Win
+    hashcat.exe -m 0 -a 0 -o cracked.txt target_hashes.txt /wordlist
 
       -m 0                 designates the type of hash we are cracking (MD5)
       -a 0                 designates a dictionary attack
       -o cracked.txt       is the output file for the cracked passwords
       target_hashes.txt    is our input file of hashes
       /usr/share/wordlists/rockyou.txt is the absolute path to the wordlist file for this dictionary attack
-      
+
+Perform Bench Mark      
+                    "hashcat -m 0 -b"
+                    
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Generic hash types
 
