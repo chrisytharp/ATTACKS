@@ -52,7 +52,23 @@ SHOW Cracked passwords
   Repeat command but add --show OR cat the cracked.txt lulz
     hashcat -m 3200 hash.txt /usr/share/wordlists/rockyou.txt --show
   
+NOTEs:
+----
+  for this hash
+Hash: $6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02.
+Salt: aReallyHardSalt
+  just put this "$6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02."in hash.txt
+can tac [--session] at end of cmdline to set session
+  hashcat64 -m 1800 sha512.hash rockyou.txt --session sha512
+----
+mode  Hash-Name           Example
 
+110	  sha1($pass.$salt)	  2fc5a684737ce1bf7b3b239df432416e0dd07357:2014  
+
+ex.
+Hash: e5d8870e5bdd26602cab8dbe07a942c8669e56d6
+Salt: 0000
+put in hash.txt --> "e5d8870e5bdd26602cab8dbe07a942c8669e56d6:0000"
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Generic hash types
 
