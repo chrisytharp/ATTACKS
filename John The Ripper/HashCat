@@ -43,6 +43,11 @@ Custom charsets:
   -2,  --custom-charset2=CS          Example:
   -3,  --custom-charset3=CS          --custom-charset1=?dabcdef : sets charset ?1 to 0123456789abcdef
   -4,  --custom-charset4=CS          -2 mycharset.hcchr : sets charset ?2 to chars contained in file
+  
+SHOW Cracked passwords
+  Repeat command but add --show
+    hashcat -m 3200 hash.txt /usr/share/wordlists/rockyou.txt --show
+  
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Generic hash types
