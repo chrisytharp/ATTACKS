@@ -85,7 +85,83 @@ It's tempting to use -fc 403 but this could hide valuable files we don't have ac
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Fuzzing parameters
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+What would you do when you find a page or API endpoint but don't know which parameters are accepted? You fuzz!
 
+Discovering a vulnerable parameter could lead to file inclusion, path disclosure, XSS, SQL injection, or even command injection. Since ffuf allows you to put the keyword 
+anywhere we can use it to fuzz for parameters.
+
+          ffuf -u 'http://MACHINE_IP/sqli-labs/Less-1/?FUZZ=1' -c -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt -fw 39
+          ffuf -u 'http://MACHINE_IP/sqli-labs/Less-1/?FUZZ=1' -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-words-lowercase.txt -fw 39
+Now that we found a parameter accepting integer values we'll start fuzzing values.
+
+At this point, we could generate a wordlist and save a file containing integers. To cut out a step we can use -w - which tells ffuf to read a wordlist from stdout. This will allow us to generate a list of integers with a command of our choice then pipe the output to ffuf. Below is a list of 5 different ways to generate numbers 0 - 255.
+
+Commands for Q2
+
+$ ruby -e '(0..255).each{|i| puts i}' | ffuf -u 'http://MACHINE_IP/sqli-labs/Less-1/?id=FUZZ' -c -w - -fw 33
+$ ruby -e 'puts (0..255).to_a' | ffuf -u 'http://MACHINE_IP/sqli-labs/Less-1/?id=FUZZ' -c -w - -fw 33
+$ for i in {0..255}; do echo $i; done | ffuf -u 'http://MACHINE_IP/sqli-labs/Less-1/?id=FUZZ' -c -w - -fw 33
+$ seq 0 255 | ffuf -u 'http://MACHINE_IP/sqli-labs/Less-1/?id=FUZZ' -c -w - -fw 33
+$ cook '[0-255]' | ffuf -u 'http://MACHINE_IP/sqli-labs/Less-1/?id=FUZZ' -c -w - -fw 33
+
+We can also use ffuf for wordlist-based brute-force attacks, for example, trying passwords on an authentication page.
+
+Command for Q3
+
+﻿$ ffuf -u http://10.10.237.61/sqli-labs/Less-11/ -c -w /usr/share/seclists/Passwords/Leaked-Databases/hak5.txt -X POST -d 'uname=Dummy&passwd=FUZZ&submit=Submit' -fs 1435 -H 'Content-Type: application/x-www-form-urlencoded'
+
+Here we have to use the POST method (specified with -X) and to give the POST data (with -d) where we include the FUZZ keyword in place of the password.
+
+We also have to specify a custom header -H 'Content-Type: application/x-www-form-urlencoded' because ffuf doesn't set this content-type header automatically as curl does.          
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Finding vhosts and subdomains
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ffuf may not be as efficient as specialized tools when it comes to subdomain enumeration but it's possible to do.
+
+$ ffuf -u http://FUZZ.mydomain.com -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+
+Some subdomains might not be resolvable by the DNS server you're using and are only resolvable from within the target's local network by their private DNS servers. So some virtual hosts (vhosts) may exist with private subdomains so the previous command doesn't find them. To try finding private subdomains we'll have to use the Host HTTP header as these requests might be accepted by the web server.
+Note: virtual hosts (vhosts) is the name used by Apache httpd but for Nginx the right term is Server Blocks.
+
+You could compare the results obtained with direct subdomain enumeration and with vhost enumeration:
+
+$ ffuf -u http://FUZZ.mydomain.com -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -fs 0
+$ ffuf -u http://mydomain.com -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -H 'Host: FUZZ.mydomain.com' -fs 0
+
+For example, it is possible that you can't find a sub-domain with direct subdomain enumeration (1st command) but that you can find it with vhost enumeration (2nd command).
+
+Vhost enumeration technique shouldn't be discounted as it may lead to discovering content that wasn't meant to be accessed externally.
+Answer the questions below
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Proxifying ffuf traffic
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Whether it' for network pivoting or for using BurpSuite plugins you can send all the ffuf traffic through a web proxy (HTTP or SOCKS5).
+
+$ ffuf -u http://10.10.237.61/ -c -w /usr/share/seclists/Discovery/Web-Content/common.txt -x http://127.0.0.1:8080
+
+It's also possible to send only matches to your proxy for replaying:
+
+$ ffuf -u http://10.10.237.61/ -c -w /usr/share/seclists/Discovery/Web-Content/common.txt -replay-proxy http://127.0.0.1:8080
+
+This may be useful if you don't need all the traffic to traverse an upstream proxy and want to minimize resource usage or to avoid polluting your proxy history.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Reviewing the options
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+As you start to use ffuf more, some options will prove to be very useful depending on your situation. For example, -ic allows you to ignore comments in wordlists that such as headers, copyright notes, comments, etc
+
+$ head /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt                                                            
+# directory-list-2.3-medium.txt
+#
+# Copyright 2007 James Fisher
+#
+# This work is licensed under the Creative Commons
+# Attribution-Share Alike 3.0 License. To view a copy of this
+# license, visit http://creativecommons.org/licenses/by-sa/3.0/
+# or send a letter to Creative Commons, 171 Second Street,
+# Suite 300, San Francisco, California, 94105, USA.
+#
+
+$ ffuf -u http://10.10.237.61/FUZZ -c -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -ic -fs 0
+
+We've only reviewed a small subset of the useful features and options ffuf has to offer for fuzzing.
+Use ffuf -h to discover the other options that might be useful for you and to answer the remaining questions in this task.
