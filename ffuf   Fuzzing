@@ -1,5 +1,53 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Tools
------
-ffuf      https://github.com/ffuf/ffuf#installation
-SecList   https://github.com/danielmiessler/SecLists#install
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                  ffuf      https://github.com/ffuf/ffuf#installation
+                  SecList   https://github.com/danielmiessler/SecLists#install
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Basics
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2 options required:
+                    -u to specify an URL 
+                    -w to specify a wordlist
+                    
+NOTE: default keyword FUZZ is used to tell ffuf where the wordlist entries will be injected. Append it to the end of the URL:
 
+        ffuf -u http://MACHINE_IP/FUZZ -w /usr/share/seclists/Discovery/Web-Content/big.txt
+
+You could also use any custom keyword instead of FUZZ, you just need to define it like this "wordlist.txt:KEYWORD"
+
+        ffuf -u http://MACHINE_IP/CUSTOM -w /usr/share/seclists/Discovery/Web-Content/big.txt:CUSTOM
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Discovering Webpages & Directories & FILES
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+WEBPAGES
+--------
+One-way is to enumerate w/ a generic list "/seclists/Discovery/Web-Content/raft-medium-files-lowercase.txt" BUT is not effecient !!!
+
+        ffuf -u http://10.10.21.24/FUZZ -w /usr/share/seclists/Discovery/Web-Content/raft-medium-files-lowercase.txt
+
+We can ASSUME the default web page is "index.<extension>"  
+We can try common extensions to determine what programming language or language that created this site
+
+        ffuf -u http://10.10.21.24/indexFUZZ -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt
+T
+he results came back with: .php & .phps
+Now we know the extensions supported, try a generic wordlist. USE "-e" to EXCLUDE extensions from results !!!
+
+        ffuf -u http://10.10.21.24/FUZZ -w /usr/share/seclists/Discovery/Web-Content/raft-medium-words-lowercase.txt -e .php,.txt
+        
+DIRECTORIES
+-----------
+  Use "directories dictionary"  --->              ffuf -u http://10.10.21.24/FUZZ -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt
+ 
+FILES
+-----
+Use "dictionaries filess"      --->               ffuf -u http://10.10.21.24/FUZZ -w SecLists-master/Discovery/Web-Content/raft-large-files.txt
+        
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
