@@ -10,6 +10,8 @@ Searching for mode types
                            hashcat -h | grep "bcrypt"
 Nix
     hashcat -m 0 -a 0 -o cracked.txt target_hashes.txt /usr/share/wordlists/rockyou.txt
+ (hash cracking w/ wordlist)   
+    hashcat -m 3200 hash.txt /usr/share/wordlists/rockyou.txt 
 Win
     hashcat.exe -m 0 -a 0 -o cracked.txt target_hashes.txt /wordlist
 
