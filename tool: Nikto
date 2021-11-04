@@ -2,9 +2,8 @@
 Nikto         vulnerability scanner
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Nikto can be used to discover possible vulnerabilities including:
-          Sensitive files
-          Outdated servers and programs (i.e. vulnerable web server installs)
-          Common server and software misconfigurations (Directory indexing, cgi scripts, x-ss protections)
+
+          Sensitive files, Outdated servers & programs, Common server and software misconfigurations (Directory indexing, cgi scripts, x-ss protections)
 
 Installing Nikto
 ----------------
@@ -22,12 +21,10 @@ performed by the clients - we may be able to leverage these to exploit the appli
 
 Scanning Multiple Hosts & Ports
 --------------------------------
-Nikto can take input directly from an Nmap scan to scan a host range. 
-By scanning a subnet, we can look for hosts across an entire network range. 
+Nikto can take input directly from an Nmap scan to scan a host range. By scanning a subnet, we can look for hosts across an entire network range. 
 We must instruct Nmap to output a scan into a format that is friendly for Nikto to read using Nmap's  "-oG"  flags
 
-Example...  172.16.0.0/24 (subnet mask 255.255.255.0, resulting in 254 possible hosts) with Nmap (using the default web port of 80) and parse the output to Nikto
-like so: 
+Example...  172.16.0.0/24 (subnet mask 255.255.255.0, resulting in 254 possible hosts) with Nmap (using the default web port of 80) and parse the output to Nikto like so: 
           
           "nmap -p80 172.16.0.0/24 -oG - | nikto -h -" 
 
