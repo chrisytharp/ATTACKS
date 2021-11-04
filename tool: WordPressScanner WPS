@@ -1,0 +1,65 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+WPScan 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          Sensitive Information Disclosure (Plugin & Theme installation versions for disclosed vulnerabilities or CVE's)
+          Path Discovery (Looking for misconfigured file permissions i.e. wp-config.php)
+          Weak Password Policies (Password bruteforcing)
+          Presence of Default Installation (Looking for default files)
+          Testing Web Application Firewalls (Common WAF plugins)
+
+        Install:    sudo apt update && sudo apt install wpscan 
+        Update:     wpscan --update
+
+  wpscan --url http://cmnatics.playground/ --enumerate t
+
+--------------------------------
+Enumerating for Installed Plugins
+---------------------------------
+WPScan uses additional methods to discover plugins (such as looking for references or embeds on pages for plugin assets). We can use the --enumerate flag with the p argument
+like so:
+
+        wpscan --url http://cmnatics.playground/ --enumerate p  
+        
+--------------------- 
+Enumerating for Users
+---------------------
+We've highlighted that WPScan is capable of performing brute-forcing attacks. Whilst we must provide a password list such as rockyou.txt, the way how WPScan enumerates for users
+is interestingly simple. WordPress sites use authors for posts. Authors are in fact a type of user. 
+This scan was performed by using the --enumerate flag with the u argument like so:
+
+        wpscan --url http://cmnatics.playground/ --enumerate u 
+        
+--------------------        
+Vulnerable Flag Scan
+--------------------
+In the commands so far, we have only enumerated WordPress to discover what themes, plugins and users are present. At the moment, we'd have to look at the output and use sites
+such as MITRE, NVD and CVEDetails to look up the names of these plugins and the version numbers to determine any vulnerabilities.
+
+WPScan has the v argument for the--enumerate flag. We provide this argument alongside another (such as p for plugins). For example, our syntax would like so:
+                
+                wpscan --url http://cmnatics.playground/ --enumerate vp 
+                
+----------------------------
+Performing a Password Attack
+----------------------------
+After determining a list of possible usernames on the WordPress install, we can use WPScan to perform a bruteforcing technique against the username we specify and a password
+list that we provide. Simply, we use the output of our username enumeration to build a command like so: 
+
+        wpscan –-url http://cmnatics.playground –-passwords rockyou.txt –-usernames cmnatic
+        
+----------------------------------------
+Adjusting WPScan's Aggressiveness (WAF)
+----------------------------------------
+Unless specified, WPScan will try to be as least "noisy" as possible. Lots of requests to a web server can trigger things such as firewalls and ultimately result in you being
+blocked by the server.
+
+This means that some plugins and themes may be missed by our WPScan. Luckily, we can use arguments such as --plugins-detection and an aggressiveness profile (passive/aggressive)
+to specify this. example: --plugins-detection aggressive
+               
+               Flag	Description	Full Example
+                p	Enumerate Plugins	--enumerate p
+                t	Enumerate Themes	--enumerate t
+                u	Enumerate Usernames	--enumerate -u
+                v	Use WPVulnDB to cross-reference for vulnerabilities. Example command looks for vulnerable plugins (p)	--enumerate vp
+                aggressive	This is an aggressiveness profile for WPScan to use.	--plugins-detection aggressive
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
