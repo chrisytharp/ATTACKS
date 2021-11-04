@@ -9,7 +9,7 @@ Install:     sudo apt install gobuster
           -z	--no-progress	Don't display progress
           -q	--quiet	Don't print the banner and other noise
           -o	--output	Output file to write results to
-          
+       dir -u -w -r     -r= follow redirects!!   
 ------------------------------------------
 dir  MODE  (enumerate website directories)
 ------------------------------------------
