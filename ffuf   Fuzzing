@@ -1,3 +1,13 @@
+LINE
+17        Basics
+33        Discovering Webpages & Directories & FILES
+60        FILTER Out Status Code  w/ -fc (filter code)    OR  -mc (match code)
+98        Fuzzing parameter
+127       Finding vhosts and subdomains
+148       Proxifying ffuf traffic
+160       Fuzz POST JSON data. Match all responses not containing text "error"
+164       Fuzz multiple locations. Match only responses reflecting the value of "VAL" keyword. Colored.
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Tools
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
