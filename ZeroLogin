@@ -8,6 +8,7 @@ INSTALL
               python3 -m virtualenv impacketEnv
               source impacketEnv/bin/activate
               pip install git+https://github.com/SecureAuthCorp/impacket
+  For KALI    sudo apt install python3-impacket
         
   Vuln Tester:
               nano zeroLoginTester.py
