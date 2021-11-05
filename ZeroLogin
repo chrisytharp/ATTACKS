@@ -24,17 +24,17 @@ INSTALL
 Discovery
 
               nmap -sV -sC -oA nmapResults [IP]         <-- '-oA' outputs results in all formats  
-              
+                                                           
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Check For Vulnerability 
 -----------------------
 
-      ./zeroLoginTester.py [EXAMPLE-DC] [DC-IP]
+      ./zeroLoginTester.py [DC-NetBIOS_name] [DC-IP]
       
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Exploit ZeroLogin
 
-      ./ExploitZeroLogin.py [EXAMPLE-DC] [DC-IP]
+      ./ExploitZeroLogin.py [DC-NetBIO_name] [DC-IP]
 
 ..more to come
       
