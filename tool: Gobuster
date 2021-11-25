@@ -17,6 +17,8 @@ Minimum Required Flags:
             -u : URL
             -w : Wordlists
                             "gobuster dir -u http://10.10.10.10 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"
+           FIND: ".mod" extenstions 
+                "gobuster dir -u 10.10.13.232/island/etc -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .etc"
                             
 Note: The URL is going to be the base path where Gobuster starts looking from. So the URL above is using the root web directory. Ex.. Apache on Linux, this is /var/www/html.
       if you have a "products" dir & you want to enum that dir, you'd set the URL as http://10.10.10.10/products !!
