@@ -1,0 +1,7 @@
+#searchsploit -s cms made simpler 2.2                                             <- "-s" for strict character matching
+  RESULTS 
+          CMS Made Simple 2.2.7 - (Authenticated) Remote Code Execution                       | php/webapps/45793.py
+#searchsploit -p 45793                                                            <- "-p" shows PATH to script
+
+grep CVE- /usr/share/exploitdb/exploits/php/webapps/46635.py                      <- find CVE thi exploits
+
