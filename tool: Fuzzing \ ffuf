@@ -37,6 +37,8 @@ WEBPAGES
 One-way is to enumerate w/ a generic list "/seclists/Discovery/Web-Content/raft-medium-files-lowercase.txt" BUT is not effecient !!!
 
         ffuf -u http://10.10.21.24/FUZZ -w /usr/share/seclists/Discovery/Web-Content/raft-medium-files-lowercase.txt -v
+        ffuf -u http://10.10.168.133/FUZZ -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-files-lowercase.txt -fc 403
+
 
 We can ASSUME the default web page is "index.<extension>"  
 We can try common extensions to determine what programming language or language that created this site
