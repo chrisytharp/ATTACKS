@@ -216,9 +216,9 @@ Set up a netcat listener on your Attacking PC on port 4444 and wait for the cron
 SUID / SGID Executables - Known Exploits !!!
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Find all the SUID/SGID executables on the device:
-
         find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2> /dev/null
-
+To look for the files with SUID permission we can use the command:
+        find / -type f -user root -perm -4000 2>/dev/null
 Find a known exploit for applications with version #'s. Exploit-DB, Google, GitHub good places to Look. (Ex.. /usr/sbin/exim-4.84-3) 
 
 A local privilege escalation exploit matching this version of exim exactly should be available. Dowload this to the machine /tmp/suid/exim/cve-2016-1531.sh
