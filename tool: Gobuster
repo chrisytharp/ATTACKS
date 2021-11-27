@@ -16,7 +16,7 @@ dir  MODE  (enumerate website directories)
 Minimum Required Flags:
             -u : URL
             -w : Wordlists
-                            "gobuster dir -u http://10.10.10.10 -w /usr/share/SecLists/Discovery/Web-Content/raft-large-words.txt -x html,php,txt"
+                            "gobuster dir -u http://10.10.10.10 -w /usr/share/SecLists/Discovery/Web-Content/raft-large-words.txt -fc 403"
            FIND: ".mod" extenstions 
                 "gobuster dir -u 10.10.13.232/island/etc -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .etc"
                             
