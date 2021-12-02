@@ -1,4 +1,4 @@
-Username Enumeration
+Username Enumeration          https://tryhackme.com/room/authenticationbypass
 ---------------------
 When trying to find authentication vulnerabilities is creating a list of valid usernames
 Website error messages are great resources for collecting info to build valid usernames List. Find "Form" to create a new user account
