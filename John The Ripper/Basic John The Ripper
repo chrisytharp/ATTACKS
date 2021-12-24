@@ -37,7 +37,9 @@ Kali
 USAGE
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 Basic Syntax
-                        john [options] [path to file]
+                        john [options] [path to file] --pot=output.txt
+                        
+                        ouput.txt will display "$NT$8af326aa4850225b75c592d4ce19ccf5:PASSWORD'
                         
 Automatic Cracking (NOT IDEA)!!
       Auto detect what type of hash it's being given & select appropriate rules and formats to crack it for you
