@@ -167,5 +167,11 @@ Fuzz POST JSON data. Match all responses not containing text "error".
     ffuf -w params.txt:PARAM -w values.txt:VAL -u https://example.org/?PARAM=VAL -mr "VAL" -c
 
 
+Virtual Hosts
+----------------------
+$ ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/namelist.txt -H "Host: FUZZ.acmeitsupport.thm" -u http://10.10.52.163
+
+ -H switch adds/edits a header (in this instance, the Host header), we have the FUZZ keyword in the space where a subdomain would normally go, and this is where 
+ we will try all the options from the wordlist
 
 
