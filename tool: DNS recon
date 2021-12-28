@@ -1,0 +1,11 @@
+DNSRecon
+--------
+dnsrecon -t brt -d acmeitsupport.thm
+
+Sublister
+---------
+./sublist3r.py -d acmeitsupport.thm
+
+URL
+----
+https://crt.sh/
