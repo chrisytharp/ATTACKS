@@ -1,0 +1,21 @@
+C2 Server
+
+Agents / Payloads
+    Payload Types (Stageless & Staged)
+    
+        Stageless Payloads (Simplest) they contain the full C2 agent and will call back to the C2 server and begin beaconing immediately.
+                                1. The Victim downloads and executes the Dropper
+                                2. The beaconing to the C2 Server begins
+                                
+        Staged Payloads req a callback to the C2 server to download additional parts of the C2 agent. Referred to as a “Dropper” because it is “Dropped” onto the victim machine 
+        to download the second stage of our staged payload. Preferred method because small amount of code needs to be written to retrieve the additional parts of the C2 agent 
+        from the C2 server. It also makes it easier to obfuscate code to bypass Anti-Virus programs.
+                                1. The Victim downloads and executes the "Dropper" 
+                                2. The Dropper calls back to the C2 Server for Stage 2
+                                3. The C2 Server sends Stage 2 back to the Victim Workstation
+                                4. Stage 2 is loaded into memory on the Victim Workstation 
+                                5. C2 Beaconing Initializes, and the Red Teamer/Threat Actors can engage with the Victim on the C2 Server.
+                                
+Listeners
+
+Beacons
