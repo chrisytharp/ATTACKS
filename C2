@@ -72,6 +72,33 @@ Listener Type
         SMB Listener - 
             Communicating via SMB named pipes is a popular method of choice, especially when dealing with a restricted network; it often enables more flexible pivoting with 
             multiple devices talking to each other and only one device reaching back out over a more common protocol like HTTP/HTTPS
+------------------------------------------------------------------------------------------------------------------------------------------------
+Setup a C2 Server - Setting Up Armitage
+------------------------------------------------------------------------------------------------------------------------------------------------
+clone the repository 
+    $ git clone https://gitlab.com/kalilinux/packages/armitage.git && cd armitage
+Buil current release
+    $ bash package.sh
+release build will be in the ./releases/unix/ folder && check and verify that Armitage was able to be built successfully.
+    $ cd ./release/unix/ && ls -la
+Preparing our Environment    
+    $ systemctl start postgresql && systemctl status postgresql
+initialize the Database so that Metasploit can use it. It's important to note that you CAN NOT be the root user when attempting to initialize the Metasploit Database.
+    $ msfdb --use-defaults delete
+    $ msfdb --use-defaults init
+Start Connect to Armitage
+    $ cd /opt/armitage/release/unix && ./teamserver YourIP P@ssw0rd123
+    $ cd /opt/armitage/release/unix && ./armitage
+    
+    
+
+
+
+
+
+
+
+
 
 
 
