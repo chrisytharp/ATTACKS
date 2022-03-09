@@ -89,8 +89,28 @@ initialize the Database so that Metasploit can use it. It's important to note th
 Start Connect to Armitage
     $ cd /opt/armitage/release/unix && ./teamserver YourIP P@ssw0rd123
     $ cd /opt/armitage/release/unix && ./armitage
-    
-    
+
+Command and Control Redirectors 
+-------------------------------
+A Redirector is a server that "Redirects" HTTP/HTTPS requests based on information within the HTTP Request body. 
+In production systems, you may see a "Redirector" in the form of a Load Balancer. This server often runs Apache 2 or NGINX.
+We will be leveraging Apache and some of its modules to build a Redirector. 
+In Metasploit, set up basic configurations to allow for more advanced configurations for setting up a Redirector. 
+Usually, this configuration is set up on multiple hosts; the purpose of this is to hide the true C2 server!!!
+
+How is a Redirector Setup?
+Before we dive into configuring a redirector, we must first understand how one is set up; we will be aligning this to the tools we have available, which are Metasploit and 
+Apache2. In Apache, we will be leveraging a module called "mod_rewrite" (or the Rewrite module). This module allows us to write rules to forward requests to internal or external
+hosts on a server based on specific HTTP headers or content. We will need to use several modules to configure our Redirector. 
+The following modules must be enabled:
+            rewrite
+            proxy
+            proxy_http
+            headers
+Note: If you are using the Attack Box, there is already a service running on port 80 - you must change the default port that Apache listens on in /etc/apache2/ports.conf. You must do this before starting the Apache 2 service, or it will fail to start.
+
+You can install apache 2 and enable it with the following commands:
+ 
 
 
 
