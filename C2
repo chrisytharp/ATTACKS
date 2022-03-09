@@ -57,6 +57,10 @@ This technique goes by several names "NGINX Reverse Proxy", "Apache Mod_Proxy/Mo
                 3. The C2 Server receives the request and looks for the custom header, and then evaluates how to respond based on the C2 Profile.
                 4. The C2 Server responds to the client and responds to the Analyst/Compromised device
 
+Free C2 Frameworks (Metasploit, Armitage, Powershell Empire/Starkiller, Covenant, Sliver)
+PAID C2 Frameworks (Cobalt Strike, Brute Ratel)
+
+
 
 
 
