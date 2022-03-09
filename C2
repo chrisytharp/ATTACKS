@@ -30,3 +30,37 @@ Agents / Payloads
                 JScript Files
                 Visual Basic Application/Scripts
                 Microsoft Office Documents                        
+
+Modules 
+        Post Exploitation modules, are simply modules that deal with anything after the initial point of compromise
+        Pivoting Modules, making it easier to access restricted network segments within the C2 Framework
+                SMB Beacon for pivoting - 
+                        1. The Victims call back to an SMB named pipe on another Victim in a non-restricted network segment.
+                        2. The Victim in the non-restricted network segment calls back to the C2 Server over a standard beacon.
+                        3. The C2 Server then sends commands back to the Victim in the non-restricted network segment.
+                        4. The Victim in the non-restricted network segment then forwards the C2 instructions to the hosts in the restricted segment.
+Domain Fronting
+                        1. The C2 Operator has a domain that proxies all requests through Cloudflare. 
+                        2. The Victim beacons out to the C2 Domain.
+                        3. Cloudflare proxies the request, then looks at the Host header and relays the traffic to the correct server.
+                        4. The C2 Server then responds to Cloudflare with the C2 Commands.
+                        5. The Victim then receives the command from Cloudflare.
+
+This technique goes by several names "NGINX Reverse Proxy", "Apache Mod_Proxy/Mod_Rewrite", "Malleable HTTP C2 Profiles", and others
+     All of the Proxy features more or less allow a user to control specific elements of the incoming HTTP request. Let's say an incoming connection request has an 
+     "X-C2-Server" header; we could explicitly extract this header using the specific technology that is at your disposal (Reverse Proxy, Mod_Proxy/Rewrite, Malleable
+     C2 Profile, etc.) and ensure that your C2 server responds with C2 based responses. Whereas if a normal user queried the HTTP Server, they might see a generic webpage.
+     This is all dependent on your configuration.
+     
+                1. The Victim beacons out to the C2 Server with a custom header in the HTTP request, while a SOC Analyst has a normal HTTP Request
+                2. The requests are proxied through Cloudflare
+                3. The C2 Server receives the request and looks for the custom header, and then evaluates how to respond based on the C2 Profile.
+                4. The C2 Server responds to the client and responds to the Analyst/Compromised device
+
+
+
+
+
+
+
+
