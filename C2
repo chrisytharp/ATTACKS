@@ -1,4 +1,10 @@
+C2 Framework Parts
+------------------
 C2 Server
+Agents / Payloads                        
+Listeners
+Beacons
+
 
 Agents / Payloads
     Payload Types (Stageless & Staged)
@@ -16,6 +22,11 @@ Agents / Payloads
                                 4. Stage 2 is loaded into memory on the Victim Workstation 
                                 5. C2 Beaconing Initializes, and the Red Teamer/Threat Actors can engage with the Victim on the C2 Server.
                                 
-Listeners
-
-Beacons
+    Payload Formats
+        Some C2 Frameworks support payloads in various other formats, for example:
+                PE Files (Executables)
+                PowerShell Scripts "Which may contain C# Code and may be compiled and executed with the Add-Type commandlet"
+                HTA Files
+                JScript Files
+                Visual Basic Application/Scripts
+                Microsoft Office Documents                        
