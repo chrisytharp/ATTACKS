@@ -60,7 +60,18 @@ This technique goes by several names "NGINX Reverse Proxy", "Apache Mod_Proxy/Mo
 Free C2 Frameworks (Metasploit, Armitage, Powershell Empire/Starkiller, Covenant, Sliver)
 PAID C2 Frameworks (Cobalt Strike, Brute Ratel)
 
-
+Listener Type
+        Standard Listener - 
+            These often communicate directly over a raw TCP or UDP socket, sending commands in cleartext
+        HTTP/HTTPS Listeners - 
+            These often front as some sort of Web Server and use techniques like Domain Fronting or Malleable C2 profiles to mask a C2 server. 
+            When specifically communicating over HTTPS, it's less likely for communications to be blocked by an NGFW
+        DNS Listener -
+            DNS Listeners are a popular technique specifically used in the "exfiltration stage" where additional infrastructure is normally required to be set up, or at the very 
+            least, a Domain Name must be purchased and registered, and a public NS server must be configured.These are often very useful for bypassing Network Proxies
+        SMB Listener - 
+            Communicating via SMB named pipes is a popular method of choice, especially when dealing with a restricted network; it often enables more flexible pivoting with 
+            multiple devices talking to each other and only one device reaching back out over a more common protocol like HTTP/HTTPS
 
 
 
