@@ -53,3 +53,47 @@ The Cobalt Strike interface is split into two horizontal panels: the top half of
 
 
 The Cobalt Strike toolbar (at the top of the client) provides quick access to some of Cobalt Strike's main features. When you first open Cobalt Strike, you'll be presented with the Event Log – a key feature. With this, operators connected to the team server can communicate with each other (IRC-style) or receive event notifications from Cobalt Strike.
+-----------
+Cobalt Strike's Beacon
+More often than not, you'll configure a listener with Cobalt Strike's Beacon payload. Beacon is Cobalt Strike's default payload to model advanced threats and is primarily used to egress a network over network protocols such as DNS and HTTP. However, peer-to-peer communication is also possible with TCP sockets or SMB named pipes.
+
+Beacon DNS
+The Beacon DNS listener uses the DNS protocol to establish communication between the compromised device and the team server. DNS Beacons establish sessions with a team server using DNS requests for domains that your Cobalt Strike team server is authoritative for. 
+
+Depending on the DNS response, Beacon will either sleep or connect to the team server and download tasks. Beacon can download tasks over TXT records, AAAA records, or A records, and can change between these record types at ease.
+
+HTTP(S) Beacon
+Both the Beacon HTTP and Beacon HTTPS listeners download tasks with an HTTP GET request, sending data back with an HTTP POST request as the default. This behavior can be modified through the use of malleable C2 profiles, allowing red team operators to customize the network signatures, behavior, and indicators of HTTP(S) Beacons.
+
+Child Beacons
+With Cobalt Strike, it's possible to use one Beacon to spawn from and communicate through another. When two Beacons are linked in this way, the child Beacon will get tasks and send its output via the parent Beacon. SMB and TCP Beacons are two listener types that are typically spawned as child Beacons. SMB Beacon uses named pipes to communicate, whereas TCP Beacon uses a TCP socket to communicate through a parent Beacon. 
+
+This adds a degree of stealth to the Cobalt Strike engagement, preventing too many egress network connections from Beacons. In the example below, an enterprise network might monitor egress network connections (highlighted in blue), but peer-to-peer connections (highlighted in red) may not be as scrutinized. 
+
+
+Child Beacons can also be spawned on devices where egress network connections are restricted, or blocked entirely. Using the parent Beacon as the pivot point, the Cobalt Strike operator can target devices that are typically only used for internal network connections.
+
+
+Managing listeners
+Listeners are created and managed using the Cobalt Strike client. To create a listener, open Cobalt Strike, then connect to a running team server. 
+
+Open the Listeners panel by clicking on the headphones icon in the toolbar, or opening the Cobalt Strike menu (located above the toolbar) and selecting the Listeners option.
+
+
+Select Add to open the New Listener configuration window and create a new listener.
+
+
+Configuring a listener
+First, each listener needs a unique name – this will be used throughout the Cobalt Strike engagement to refer to the listener. Next, select the type of listener you're creating from the Payload drop-down box. 
+
+Depending on the listener type, a range of payload options may also need to be configured. For example, HTTP Beacons require you to specify the HTTP Host to use with the payload (in this example, the IP address of the team server), while SMB Beacons allow you to specify the pipe name to use for communication, or use the default pipe name.
+
+Click the Save button to finish the listener creation process. Once saved, Cobalt Strike will display a confirmation pop-up message:
+
+
+In the Listeners tab, you should see the details of the listener that's now running.
+
+
+Interacting with listeners
+The interaction options for listeners can be found at the bottom of the Listener tab. To edit the details of a listener, select it and click Edit. To remove a listener, select it and click Remove. 
+
