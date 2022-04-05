@@ -1,3 +1,4 @@
+---TEAMSERVER-------
 Launching a team server
 The team server and client are installed with Cobalt Strike by default. However, you'll need to start the team server before you can use the client. First, navigate to the Cobalt Strike directory. In this lab, we've installed Cobalt Strike in the /opt/cobaltstrike directory.
 
@@ -54,7 +55,8 @@ The Cobalt Strike interface is split into two horizontal panels: the top half of
 
 The Cobalt Strike toolbar (at the top of the client) provides quick access to some of Cobalt Strike's main features. When you first open Cobalt Strike, you'll be presented with the Event Log – a key feature. With this, operators connected to the team server can communicate with each other (IRC-style) or receive event notifications from Cobalt Strike.
 -----------
-Cobalt Strike's Beacon
+Cobalt Strike's Beacon / LISTENERS--------
+-----------
 More often than not, you'll configure a listener with Cobalt Strike's Beacon payload. Beacon is Cobalt Strike's default payload to model advanced threats and is primarily used to egress a network over network protocols such as DNS and HTTP. However, peer-to-peer communication is also possible with TCP sockets or SMB named pipes.
 
 Beacon DNS
@@ -96,4 +98,79 @@ In the Listeners tab, you should see the details of the listener that's now runn
 
 Interacting with listeners
 The interaction options for listeners can be found at the bottom of the Listener tab. To edit the details of a listener, select it and click Edit. To remove a listener, select it and click Remove. 
+---------------
+What are payloads?-------
+--------------
+Fundamentally, a payload is a method in which attacker-controller code is delivered and executed on a target system. Payloads come in all forms, from simple PowerShell commands to comprehensive remote access Trojans. Cobalt Strike supports both the creation and the management of payloads, without the need to use additional tools. 
 
+Packages
+Cobalt Strike supports the creation of malicious packages from within the client. Depending on the requirements of the red team engagement, an operator can create packages on the fly, taking advantage of features already present on targets to gain code execution.
+
+By default, Cobalt Strike is able to generate the following packages:
+
+HTML application
+A malicious .HTA file is a Windows-based HTML application that utilizes scripting languages supported by Internet Explorer. When run on the target system, the application spawns a Cobalt Strike Beacon – calling back to a listener.
+
+MS Office macro
+Cobalt Strike generates the code required to create a malicious macro, then gives the operator specific instructions on how to add the macro to either a Microsoft Word or Excel document.
+
+
+Payload generator
+Cobalt Strike can create a payload to stage a Cobalt Strike listener on a target. This option allows the operator to create a payload in a variety of programming and scripting languages, such as C, PowerShell, and Ruby, before saving it to a file. Cobalt Strike can create both 32-bit (x86) and 64-bit (x64) payloads with this method.
+
+
+Windows executable
+Finally, Cobalt Strike also has the ability to create standalone malicious executables for use on Windows systems. Cobalt Strike can either create staged (Windows executable) or stageless (Windows executable (S)) executables, depending on the requirements of the engagement.  
+
+Creating packages
+To create a package using Cobalt Strike, select the Attacks menu at the top of the client, then open the Packages submenu. 
+
+
+In this lab, you'll need to create a PowerShell payload using the Payload Generator. First, open the Payload Generator, then select the Listener, Morgoth. Select PowerShell from the Output options and click on Generate to save the .ps1 file.
+
+
+The created file will contain the new PowerShell payload for the red team operator (or their victim) to run on a target system.
+
+
+Web Drive-bys
+Once you've created your payload, you'll need to find a way to deliver it to your target. In a remote engagement, payloads are usually delivered across the internet, with a target executing the payload themselves – either intentionally or otherwise. 
+
+Cobalt Strike facilitates the delivery of payloads in this way with its user-driven Web Drive-by attack tool, which offers a variety of features to support the red team engagement. A drive-by is a type of attack that refers to the unintentional download of a malicious file, code, or software onto a target. 
+
+Clone Site
+Cobalt Strike's Clone Site tool completely clones a website, automatically fixing any images or external hyperlinks so that they work as expected. This copied site is then hosted on the team server and can be used to stage further attacks.
+
+Host File
+The Host File tool uses Cobalt Strike's web server to host any file, without any complicated configuration. Simply choose the file to host, the URI to access it, and the mime type of the file; Cobalt Strike will do the rest.
+
+
+Applet attacks
+Cobalt Strike offers two types of Java applet attacks – Signed and Smart. The Signed Applet Attack tool starts a web server hosting a signed Java applet calling back to Cobalt Strike, whereas the Smart Applet Attack tool combines several Java exploits in an attempt to disable the Java security sandbox. 
+
+Both of these attacks require Java to be installed on the target system; the Smart Applet Attack is only effective on Java 1.7.u21, Java 1.6u45, and below. It should also be noted that, due to modern browser implications, these payloads are highly unlikely to work in a typical environment. Since 2016, most web browsers (by default) disable Java applets running without explicit permission – reducing the likelihood of a successful attack – or disable Java entirely. 
+
+Other tools
+Cobalt Strike also includes the Scripted Web Delivery tool that creates and hosts a stageless Beacon payload, combining the features of the Payload Generator and Host File tool into one. Cobalt Strike also facilitates phishing operations through its dedicated spear phishing functionality. 
+
+Starting a web drive-by
+In this lab, once you've created your malicious package, you'll need to use the Host File tool to host your payload. Open the tool by clicking on the Attacks menu, followed by the Web Drive-by submenu – Host File is located here.
+
+
+Select the PowerShell payload you should have created, and set the local URI to /shell.ps1. Then, select the Launch button to start hosting your malicious payload. Navigate to the address given to you by Cobalt Strike in a web browser to see your hosted malicious script.
+
+
+Important note
+The victim machine will periodically attempt to download and run the .ps1 file found at /shell.ps1 on the team server. 
+
+This process will happen automatically, but it may take up to five minutes for the victim machine to spawn the Beacon and call back to Cobalt Strike. 
+
+If you find it taking longer than this, please ensure you've created a PowerShell payload and that it's hosted with the local URL /shell.ps1.
+
+Spawning a Beacon
+After the malicious payload has been delivered and executed by the victim, Cobalt Strike will receive a connection from a Beacon. This will be announced in the Event Log (as shown below).
+
+
+Details of the newly spawned Beacon will be displayed in the Beacon session table. This will allow you to see – at a glance – important details about the Beacon session, such as the user account Beacon is running under, the name of the host, and the process Beacon has spawned as.
+
+
+The visualization of this session can be changed if you wish. To view a Beacon session as a pivot graph, navigate to Cobalt Strike, Visualization, then Pivot Graph, or select the Visualization button in the Cobalt Strike toolbar (highlighted in the image below).
